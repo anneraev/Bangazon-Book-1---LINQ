@@ -88,7 +88,19 @@ namespace LINQ
                 879.45, 9442.85, 2454.63, 45.65, 2340.29, 34.03, 4786.45, 745.31, 21.76
             };
             double highest = prices.Max();
-        Console.WriteLine($"The highest price is ${highest}.");
+            Console.WriteLine($"The highest price is ${highest}.");
+
+            /*
+        Store each number in the following List until a perfect square
+        is detected.
+
+        Ref: https://msdn.microsoft.com/en-us/library/system.math.sqrt(v=vs.110).aspx
+    */
+            List<int> wheresSquaredo = new List<int>()
+            {
+                66, 12, 8, 27, 82, 34, 7, 50, 19, 46, 81, 23, 30, 4, 68, 14
+            };
+
         }
     }
 }
