@@ -220,7 +220,7 @@ namespace LINQ
                 }
             */
 
-            Console.WriteLine("List of millionaires and their bank");
+            Console.WriteLine("List of millionaires and their bank using LINQ");
             List<ReportItem> millionaireReport = newCustomers.Where(customer => customer.Balance >= 1000000).Select(customer => new ReportItem
             {
                 CustomerName = customer.Name,
@@ -228,6 +228,18 @@ namespace LINQ
             }).ToList();
 
             foreach (ReportItem item in millionaireReport)
+            {
+                Console.WriteLine($"{item.CustomerName} at {item.BankName}");
+            }
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("List of millionaires and their bank with join operator");
+            var millionaireReportJoin = newCustomers.Where(customer => customer.Balance >= 1000000).Join(newBanks, customer => customer.Bank, bank => bank.Symbol, (customer, bank) => new
+            {
+                CustomerName = customer.Name,
+                BankName = bank.Name
+            });
+
+            foreach (var item in millionaireReportJoin)
             {
                 Console.WriteLine($"{item.CustomerName} at {item.BankName}");
             }
