@@ -90,6 +90,8 @@ namespace LINQ
             double highest = prices.Max();
             Console.WriteLine($"The highest price is ${highest}.");
 
+            Console.WriteLine("-------------------------");
+
             /*
         Store each number in the following List until a perfect square
         is detected.
@@ -100,7 +102,15 @@ namespace LINQ
             {
                 66, 12, 8, 27, 82, 34, 7, 50, 19, 46, 81, 23, 30, 4, 68, 14
             };
+            IEnumerable<int> untilPerfectSquare = wheresSquaredo.TakeWhile(num => Math.Sqrt(num) % 1 != 0);
 
+            Console.WriteLine("This list stops before the first perfect square:");
+
+            foreach (int item in untilPerfectSquare)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("-------------------------");
         }
     }
 }
