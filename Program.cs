@@ -4,6 +4,27 @@ using System.Linq;
 
 namespace LINQ
 {
+
+    public class Customer
+    {
+        public string Name { get; set; }
+        public double Balance { get; set; }
+        public string Bank { get; set; }
+    }
+
+    public class Bank
+    {
+        public string Name { get; set; }
+        public string Symbol { get; set; }
+    }
+
+    public class ReportItem
+    {
+        public string CustomerName { get; set; }
+        public string BankName { get; set; }
+    }
+
+
     class Program
     {
         static void Main(string[] args)
@@ -110,7 +131,108 @@ namespace LINQ
             {
                 Console.WriteLine(item);
             }
+
             Console.WriteLine("-------------------------");
+
+            List<Customer> customers = new List<Customer>() {
+            new Customer(){ Name="Bob Lesman", Balance=80345.66, Bank="FTB"},
+            new Customer(){ Name="Joe Landy", Balance=9284756.21, Bank="WF"},
+            new Customer(){ Name="Meg Ford", Balance=487233.01, Bank="BOA"},
+            new Customer(){ Name="Peg Vale", Balance=7001449.92, Bank="BOA"},
+            new Customer(){ Name="Mike Johnson", Balance=790872.12, Bank="WF"},
+            new Customer(){ Name="Les Paul", Balance=8374892.54, Bank="WF"},
+            new Customer(){ Name="Sid Crosby", Balance=957436.39, Bank="FTB"},
+            new Customer(){ Name="Sarah Ng", Balance=56562389.85, Bank="FTB"},
+            new Customer(){ Name="Tina Fey", Balance=1000000.00, Bank="CITI"},
+            new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
+        };
+            List<Customer> millionaires = customers.Where(customer => customer.Balance >= 1000000).ToList();
+
+            foreach (Customer Millionaire in millionaires)
+            {
+                Console.WriteLine($"{Millionaire.Name} has a ballance of {Millionaire.Balance} at {Millionaire.Bank}");
+            }
+            Console.WriteLine("-------------------------");
+            List<string> banks = customers.Select(customer => customer.Bank).Distinct().ToList();
+
+            Console.WriteLine("Number of Millionaire Customers per bank;");
+
+            List<string> Banklist = customers.Select(customer => customer.Bank).Distinct().ToList();
+
+            Dictionary<string, int> BanksAndNumbers = new Dictionary<string, int>();
+
+            foreach (string Bank in Banklist)
+            {
+                int CustomerCount = customers.Where(customer => customer.Bank == Bank).ToList().Count;
+                BanksAndNumbers.Add(Bank, CustomerCount);
+            }
+
+            foreach (KeyValuePair<string, int> entry in BanksAndNumbers)
+            {
+                Console.WriteLine($"{entry.Key}: {entry.Value}");
+            }
+            Console.WriteLine("-------------------------");
+
+            /*
+    TASK:
+    As in the previous exercise, you're going to output the millionaires,
+    but you will also display the full name of the bank. You also need
+    to sort the millionaires' names, ascending by their LAST name.
+
+    Example output:
+        Tina Fey at Citibank
+        Joe Landy at Wells Fargo
+        Sarah Ng at First Tennessee
+        Les Paul at Wells Fargo
+        Peg Vale at Bank of America
+*/
+
+            // Create some banks and store in a List
+            List<Bank> newBanks = new List<Bank>() {
+            new Bank(){ Name="First Tennessee", Symbol="FTB"},
+            new Bank(){ Name="Wells Fargo", Symbol="WF"},
+            new Bank(){ Name="Bank of America", Symbol="BOA"},
+            new Bank(){ Name="Citibank", Symbol="CITI"},
+        };
+
+            // Create some customers and store in a List
+            List<Customer> newCustomers = new List<Customer>() {
+            new Customer(){ Name="Bob Lesman", Balance=80345.66, Bank="FTB"},
+            new Customer(){ Name="Joe Landy", Balance=9284756.21, Bank="WF"},
+            new Customer(){ Name="Meg Ford", Balance=487233.01, Bank="BOA"},
+            new Customer(){ Name="Peg Vale", Balance=7001449.92, Bank="BOA"},
+            new Customer(){ Name="Mike Johnson", Balance=790872.12, Bank="WF"},
+            new Customer(){ Name="Les Paul", Balance=8374892.54, Bank="WF"},
+            new Customer(){ Name="Sid Crosby", Balance=957436.39, Bank="FTB"},
+            new Customer(){ Name="Sarah Ng", Balance=56562389.85, Bank="FTB"},
+            new Customer(){ Name="Tina Fey", Balance=1000000.00, Bank="CITI"},
+            new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
+        };
+
+            /*
+                You will need to use the `Where()`
+                and `Select()` methods to generate
+                instances of the following class.
+
+                public class ReportItem
+                {
+                    public string CustomerName { get; set; }
+                    public string BankName { get; set; }
+                }
+            */
+
+            Console.WriteLine("List of millionaires and their bank");
+            List<ReportItem> millionaireReport = newCustomers.Where(customer => customer.Balance >= 1000000).Select(customer => new ReportItem
+            {
+                CustomerName = customer.Name,
+                BankName = newBanks.Find(bank => bank.Symbol == customer.Bank).Name
+            }).ToList();
+
+            foreach (ReportItem item in millionaireReport)
+            {
+                Console.WriteLine($"{item.CustomerName} at {item.BankName}");
+            }
         }
     }
 }
+
