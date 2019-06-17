@@ -153,17 +153,16 @@ namespace LINQ
                 Console.WriteLine($"{Millionaire.Name} has a ballance of {Millionaire.Balance} at {Millionaire.Bank}");
             }
             Console.WriteLine("-------------------------");
-            List<string> banks = customers.Select(customer => customer.Bank).Distinct().ToList();
 
             Console.WriteLine("Number of Millionaire Customers per bank;");
 
-            List<string> Banklist = customers.Select(customer => customer.Bank).Distinct().ToList();
+            List<string> Banklist = millionaires.Select(customer => customer.Bank).Distinct().ToList();
 
             Dictionary<string, int> BanksAndNumbers = new Dictionary<string, int>();
 
             foreach (string Bank in Banklist)
             {
-                int CustomerCount = customers.Where(customer => customer.Bank == Bank).ToList().Count;
+                int CustomerCount = millionaires.Where(customer => customer.Bank == Bank).ToList().Count;
                 BanksAndNumbers.Add(Bank, CustomerCount);
             }
 
